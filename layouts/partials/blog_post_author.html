@@ -1,0 +1,13 @@
+{{ $author := .author }}
+{{ $author_data := getJSON $author }}
+{{ $container_class := .container_class }}
+<span class="{{ $container_class }}">
+	{{ if .prefix }}
+	<span class="prefix">{{ $.prefix }} </span>
+	{{ end }}
+	{{ if $author_data.link }}
+	<a href="{{ $author_data.link | relURL }}">{{ $author_data.first_name }} {{ $author_data.last_name }}</a>
+	{{ else }}
+	<span>{{ $author_data.first_name }} {{ $author_data.last_name }}</span>
+	{{ end }}
+</span>

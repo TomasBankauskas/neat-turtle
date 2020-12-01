@@ -1,0 +1,10 @@
+{{ $category := .category }}
+{{ $container_class := .container_class }}
+{{ $category_data := getJSON $category }}
+<span class="{{ $container_class }}">
+	{{ if $category_data.link }}
+	<a href="{{ $category_data.link | relURL }}">{{ $category_data.title }}</a>
+	{{ else }}
+	<span>{{ $category_data.title }}</span>
+	{{ end }}
+</span>

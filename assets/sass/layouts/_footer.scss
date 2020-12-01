@@ -1,0 +1,86 @@
+/**
+ * Site Footer
+ */
+//.site-footer__nav,
+//.site-footer__info {
+//	border-top: 1px solid $color-footer-border;
+//}
+
+.site-footer {
+	position: relative;
+	z-index: 1;
+
+	&.py-5 {
+		padding-top: 8.33333rem;
+
+		@include media-breakpoint-up(md) {
+			padding-top: 8.33333rem;
+		}
+	}
+}
+
+.site-footer__menu {
+	max-width: 270px;
+}
+
+.site-footer__copyright {
+  font-size: 0.77778em;
+
+  & > span,
+  & > a {
+    margin-right: 5px;
+  }
+}
+
+.site-footer__social {
+	.btn--icon {
+		border-radius: 50%;
+		font-size: 1.66667rem;
+	}
+}
+
+.site-footer__logo {
+	img {
+		max-height: 1.77778rem;
+	}
+}
+
+.site-footer__links {
+	a {
+		font-size: 0.88889em;
+		font-weight: bold;
+		letter-spacing: 0.05em;
+		text-decoration: none;
+		text-transform: uppercase;
+
+		&:hover {
+			text-decoration: underline;
+		}
+	}
+}
+
+.site-footer__text {
+	bottom: 0;
+	color: hsla(0, 0%, 100%, 0.1);
+	font-size: 15vw;
+	font-weight: bold;
+	height: 50%;
+	left: 0;
+	letter-spacing: 1vw;
+	line-height: 100%;
+	position: absolute;
+	right: 0;
+	top: 0;
+	z-index: -1;
+}
+
+@each $style in map-keys($theme-styles) {
+	$style-suffix: "#{$style}";
+	$fonts: map-deep-get($theme-styles, $style, "fonts");
+
+	.style-#{$style-suffix} {
+		.site-footer__text {
+			font-family: map-get($fonts, "serif");
+		}
+	}
+}

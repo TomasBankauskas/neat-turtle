@@ -1,0 +1,62 @@
+{{ define "content" }}
+
+<article class="post py-5 py-sm-6 py-md-7">
+	{{ $has_image := false }}
+	{{ if .Params.image }}
+		{{ $has_image = true }}
+	{{ end }}
+	{{ $image_pos := .Params.image_position | default "top" }}
+	<div class="post__hero container{{ if or (eq $image_pos "top") (eq $has_image false) }} container--medium{{ end }}">
+		<div class="mb-4{{ if ne $image_pos "top" }} mb-md-5{{ end }}{{ if ne $image_pos "top" }} mb-md-6{{ end }}{{ if ne $image_pos "top" }} grid{{ end }}{{ if and $has_image (ne $image_pos "top") }} items-center{{ end }}">
+			{{ if $has_image }}
+			<div class="post__image mb-3{{ if ne $image_pos "top" }} cell-12{{ end }}{{ if ne $image_pos "top" }} cell-lg-7{{ end }}{{ if ne $image_pos "top" }} mb-lg-0{{ end }}">
+				<img src="{{ $.Params.image | relURL }}" alt="{{ $.Params.title }}" />
+			</div>
+			{{ end }}
+
+			<header class="post__header text-center{{ if ne $image_pos "top" }} cell-12{{ end }}{{ if ne $image_pos "top" }} cell-lg-5{{ end }}{{ if and $has_image (eq $image_pos "right") }} order-lg-first{{ end }}">
+				{{ if .Params.category }}
+				<div class="post__meta mb-2">
+					{{ $include_dict := dict "category" $.Params.category "container_class" "post__cat" }}
+					{{ partial "blog_post_categories.html" $include_dict }}
+				</div>
+				{{ end }}
+				<h1 class="post__title mt-0">{{ .Params.title }}</h1>
+				{{ if .Params.subtitle }}
+					<p class="post__subtitle">{{ $.Params.subtitle }}</p>
+				{{ end }}
+			</header>
+		</div>
+	</div>
+
+	<div class="container container--medium">
+		<div class="post__meta mb-2">
+			{{ if .Params.author }}
+				{{ $include_dict := dict "author" $.Params.author "container_class" "post__byline" "prefix" "By" }}
+				{{ partial "blog_post_author.html" $include_dict }}
+				<span class="post__meta-sep"> &middot; </span>
+			{{ end }}
+			<span class="post__date">on <time datetime="{{ .Date | dateFormat "2006-01-02 15:04" }}">{{ .Date | dateFormat "January 02, 2006" }}</time></span>
+		</div>
+
+		<div class="post__body text-block">
+			{{ .Content }}
+		</div>
+	
+		{{ if .Params.tags }}
+		<footer class="post__footer mt-4 mt-md-5">
+			{{ $include_dict := dict "tags" $.Params.tags }}
+			{{ partial "blog_post_tags.html" $include_dict }}
+		</footer>
+		{{ end }}
+	</div>
+
+</article>
+
+{{ range $section := .Params.sections }}
+  {{ $include_dict := dict "section" $section "Site" $.Site "page" $ }}
+  {{ $component := print $section.type ".html" }}
+  {{ partial $component $include_dict }}
+{{ end }}
+
+{{ end }}
