@@ -35,7 +35,7 @@ sections:
     padding_bottom: medium
     background_color: primary
   - type: selected_posts_section
-    title: est
+    title: ''
     posts:
       - content/blog/post-6.md
       - content/blog/post-7.md
